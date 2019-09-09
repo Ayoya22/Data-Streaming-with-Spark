@@ -25,15 +25,12 @@ def generate_data() -> None:
 
 # TODO complete this function
 def dict_to_binary(json_dict: dict) -> bytes:
-    """
-    Encode your json to utf-8
-    :param json_dict:
-    :return:
-    """
+    return json.dumps(json_dict).encode('utf-8')
+
 
 # TODO set up kafka client
 if __name__ == "__main__":
-    client = pykafka.KafkaClient()
+    client = pykafka.KafkaClient("localhost:9092")
     print("topics", client.topics)
     producer = client.topics[b'service-calls'].get_producer()
 
