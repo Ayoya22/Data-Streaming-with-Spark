@@ -33,7 +33,7 @@ def dict_to_binary(json_dict: dict) -> bytes:
 
 # TODO set up kafka client
 if __name__ == "__main__":
-    #client =
+    client = pykafka.KafkaClient()
     print("topics", client.topics)
     producer = client.topics[b'service-calls'].get_producer()
 
