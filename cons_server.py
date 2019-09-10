@@ -5,7 +5,7 @@ import logging
 logging.getLogger("pykafka.broker").setLevel('ERROR')
 
 client = KafkaClient(hosts="localhost:9092")
-topic = client.topics[b'service-calls']
+topic = client.topics[b'test']
 consumer = topic.get_balanced_consumer(
     consumer_group=b'pytkafka-test-2',
     auto_commit_enable=False,

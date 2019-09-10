@@ -4,7 +4,7 @@ import logging
 import pykafka
 import time
 
-INPUT_FILE = pathlib.Path(__file__).parent.joinpath('resources/police-department-calls-for-service.json')
+INPUT_FILE = pathlib.Path(__file__).parent.joinpath('resources/police-department-calls-for-service2.json')
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +20,7 @@ def generate_data() -> None:
     for i in data:
         message = dict_to_binary(i)
         producer.produce(message)
+        # print(message)
         time.sleep(2)
 
 

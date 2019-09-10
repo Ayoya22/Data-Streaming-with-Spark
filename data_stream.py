@@ -7,6 +7,26 @@ from dateutil.parser import parse as parse_date
 
 
 # TODO Create a schema for incoming resources
+"""
+schema = StructType([
+    StructField("id", StringType(), True),
+    StructField("name", StringType(), True),
+    StructField("host_id", StringType(), True),
+    StructField("host_name", StringType(), True),
+    StructField("neighbourhood_group", StringType(), True),
+    StructField("neighbourhood", StringType(), True),
+    StructField("latitude", StringType(), True),
+    StructField("longitude", StringType(), True),
+    StructField("room_type", StringType(), True),
+    StructField("price", StringType(), True),
+    StructField("minimum_nights", StringType(), True),
+    StructField("number_of_reviews", StringType(), True),
+    StructField("availability_365", StringType(), True),
+    StructField("calculated_host_listings_count", StringType(), True),
+    StructField("last_review", StringType(), True),
+    StructField("reviews_per_month", StringType(), True)
+])
+"""
 schema = StructType([
     StructField("crime_id", StringType(), True),
     StructField("original_crime_type_name", StringType(), True),
@@ -41,7 +61,7 @@ def run_spark_job(spark):
         .readStream \
         .format("kafka") \
         .option("kafka.bootstrap.servers", "localhost:9092") \
-        .option("subscribe", "service-calls") \
+        .option("subscribe", "test") \
         .option("startingOffsets", "earliest") \
         .option("maxOffsetsPerTrigger", 200) \
         .load()
