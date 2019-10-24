@@ -56,6 +56,8 @@ def run_spark_job(spark):
     # TODO Create Spark Configuration
     # Create Spark configurations with max offset of 200 per trigger
     # set up correct bootstrap server and port
+    # test being my topic
+
     # df = spark ...
     df = spark \
         .readStream \
@@ -94,10 +96,14 @@ def run_spark_job(spark):
             ).count()
 
     # TODO use udf to convert timestamp to right format on a call_date_time column
-    # converted_df =
+    converted_df = counts_df.withColumn(
+        "call_date_time", udf_convert_time(counts_df.call_date_time))
 
     # TODO apply aggregations using windows function to see how many calls occurred in 2 day span
-    # calls_per_2_days =
+    calls_per_2_days = converted_df \
+        .groupBy(
+        psf.window(converted_df.call_date_time, "2 day")
+    ).agg(psf.count("crime_id").alias("calls_per_2_day")).select("calls_per_2_day")
 
     # TODO write output stream
     query = counts_df \
