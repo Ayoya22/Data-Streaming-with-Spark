@@ -47,6 +47,7 @@ def run_spark_job(spark):
         .option("subscribe", "test") \
         .option("startingOffsets", "earliest") \
         .option("maxOffsetsPerTrigger", 200) \
+        .option("maxRatePerPartition", 100) \    
         .load()
 
     # Show schema for the incoming resources for checks
