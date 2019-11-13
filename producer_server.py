@@ -24,12 +24,10 @@ def generate_data() -> None:
         time.sleep(2)
 
 
-# TODO complete this function
+
 def dict_to_binary(json_dict: dict) -> bytes:
     return json.dumps(json_dict).encode('utf-8')
 
-
-# TODO set up kafka client
 if __name__ == "__main__":
     client = pykafka.KafkaClient("localhost:9092")
     print("topics", client.topics)
