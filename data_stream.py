@@ -5,8 +5,7 @@ from pyspark.sql.types import *
 import pyspark.sql.functions as psf
 from dateutil.parser import parse as parse_date
 
-
-# TODO Create a schema for incoming resources
+# Create a schema for incoming resources
 
 schema = StructType([
     StructField("crime_id", StringType(), True),
@@ -25,7 +24,6 @@ schema = StructType([
     StructField("common_location", StringType(), True)
 ])
 
-# TODO create a spark udf to convert time to YYYYmmDDhh format
 @psf.udf(StringType())
 def udf_convert_time(timestamp):
     d = parse_date(timestamp)
@@ -34,7 +32,7 @@ def udf_convert_time(timestamp):
 
 def run_spark_job(spark):
 
-    # TODO Create Spark Configuration
+   
     # Create Spark configurations with max offset of 200 per trigger
     # set up correct bootstrap server and port
     # test being my topic
@@ -65,7 +63,7 @@ def run_spark_job(spark):
                 psf.col('address'),
                 psf.col('disposition'))
 
-    # TODO get different types of original_crime_type_name in 60 minutes interval
+    
     counts_df = distinct_table \
         .withWatermark("call_datetime", "60 minutes") \
         .groupBy(
@@ -73,11 +71,11 @@ def run_spark_job(spark):
             distinct_table.original_crime_type_name
             ).count()
 
-    # TODO use udf to convert timestamp to right format on a call_date_time column
+   
     converted_df = counts_df.withColumn(
         "call_date_time", udf_convert_time(counts_df.call_date_time))
 
-    # TODO apply aggregations using windows function to see how many calls occurred in 2 day span
+    
     calls_per_2_days = converted_df \
         .groupBy(
         psf.window(converted_df.call_date_time, "2 day")
