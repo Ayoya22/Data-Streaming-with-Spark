@@ -39,7 +39,6 @@ def run_spark_job(spark):
     # set up correct bootstrap server and port
     # test being my topic
 
-    # df = spark ...
     df = spark \
         .readStream \
         .format("kafka") \
@@ -53,9 +52,6 @@ def run_spark_job(spark):
     # Show schema for the incoming resources for checks
     df.printSchema()
 
-    # TODO extract the correct column from the kafka input resources
-    # Take only value and convert it to String
-    # kafka_df =
     kafka_df = df.selectExpr("CAST(value AS STRING)")
 
     service_table = kafka_df \
